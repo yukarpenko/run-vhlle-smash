@@ -15,8 +15,8 @@ mkdir hydro.in
 mkdir hydro.out
 mkdir sampler.in
 mkdir sampler.out
-mkdir afterburner.in
-mkdir afterburner.out
+mkdir smash.in
+mkdir smash.out
 mkdir scripts
 mkdir jobs
 mkdir hydrologs
