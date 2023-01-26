@@ -4,6 +4,12 @@ MUFFIN is a newly developed event-by-event hybrid multi-fluid hydrodynamic model
 - hadron sampler - MC sampling of hadrons from particlization hypersurface
 - smash - simulates the final-state interactions and resonance decays
 
+## Requirements
+- ROOT >= 5.34
+- cmake >= 3.9
+- boost filesystem >= 1.49
+- the GNU Scientific Library >= 2.0
+
 ## Install
 To install all necessary parts, simply run
 ```
@@ -30,7 +36,12 @@ This script generates input files for all three parts of the model as well as sc
 - `projA`, `projZ` - projectile nucleon and proton numbers
 - `targA`, `targZ` - target nucleon and proton numbers
 - `eosType` - sets the equation of state used in hydrodynamic evolution
+  - `0` - [Laine](https://arxiv.org/abs/hep-ph/0603048)
+  - `1` - [chiral EoS](https://arxiv.org/abs/1009.5239)
+  - `2` - 1st order phase transition EoS
 - `eosTypeHadron` - sets the equation of state used to compute variables at freeze-out hypersurface
+  - `0` - PDG hadronic EoS
+  - `1` - SMASH hadronic EoS
 - `etaS` - shear viscosity
 - `zetaS` - bulk viscosity
 - `e_crit` - energy density of the freeze-out hypersurface [GeV/fm<sup>3</sup>]
@@ -44,6 +55,8 @@ This script generates input files for all three parts of the model as well as sc
 - `formationTime` - formation time [fm], if non-zero, the code run much longer
 - `xi_fa`, `xi_q`, `xi_h` - scales the friction force between fireball and projectile/target, projectile and target in quark phase, and projectile and target in hadron phase, respectively
 
+Recommended size of the hydrodynamic grid is 121x121x161, however, for development or running on laptop you may use 61x61x81 (and `dtau=0.1`). With this setting the code runs much faster and uses less memory.
+
 ### Hadron sampler
 - `number_of_events` - number of events generated from the particlization hypersurface
 - `shear` - sets whether freezeout hypersurface contains pi coefficients (so set `1` even if you set zero shear viscosity in hydro, because it write the coefficients to the freezeout file anyway, they are just zeros)
@@ -51,3 +64,9 @@ This script generates input files for all three parts of the model as well as sc
 
 ### Smash
 The only thing you need to change here is `Nevents`, which is done automatically in the script. 
+
+## Analysis
+I wrote also few scripts to calculate basic observables - dN/dη, p<sub>T</sub> spectra and elliptic flow. You may clone it from here:
+```
+git clone git@github.com:jakubcimerman/scripts.git
+```
