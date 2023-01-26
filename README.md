@@ -1,5 +1,5 @@
 # MUFFIN (MUlti Fluid simulation for Fast IoN collisions) 
-MUFFIN is a newly developed event-by-event hybrid multi-fluid hydrodynamic model for simulating relativistic heavy-ion collisions. The model consist of three part:
+MUFFIN is a newly developed event-by-event hybrid multi-fluid hydrodynamic model for simulating relativistic heavy-ion collisions. The model consist of three parts:
 - three-fluid hydrodynamics - simulates collision of nuclei assuming they are two droplets of fluid creating the third fluid from the friction
 - hadron sampler - MC sampling of hadrons from particlization hypersurface
 - smash - simulates the final-state interactions and resonance decays
