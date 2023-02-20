@@ -1,14 +1,15 @@
 #!/bin/bash
 
-# copy this file to muffin/hybrid/scripts and run it from there using . run_muffin.sh
+# execution script adapted from a script to run MUFFIN by Jakub Cimerman
 
 # number of events generated from freezeout hypersurface
-afterburner_events=500
+afterburner_events=50
 
 # title of run
 prefix=test_run
 
-cd ..
+cd ../vhlle-smash/hybrid
+echo "Starting in: `pwd`"
 
 mkdir -p hydrologs/$prefix
 mkdir -p hydro.out/$prefix
@@ -19,8 +20,7 @@ mkdir -p smash.out/$prefix
 job_file=jobs/$prefix.job
 echo "#!/bin/bash" > $job_file
 echo "cd `pwd`" >> $job_file
-echo "time ../vhlle/hlle_visc -params hydro.in/$prefix -outputDir hydro.out/$prefix/ > hydrologs/$prefix/o.log 2> hydrologs/$prefix/e.log" >> $job_file
-echo "cat hydro.out/$prefix/freezeout_p.dat hydro.out/$prefix/freezeout_t.dat hydro.out/$prefix/freezeout_f.dat > hydro.out/$prefix/freezeout.dat" >> $job_file
+echo "time ../vhlle/hlle_visc -params hydro.in/$prefix -ISinput ic/glissando/sources.LHC.20-30.dat -system LHC276 -outputDir hydro.out/$prefix/ > hydrologs/$prefix/o.log 2> hydrologs/$prefix/e.log" >> $job_file
 echo "time ../smash-hadron-sampler/build/sampler events 1 -params sampler.in/$prefix -surface hydro.out/$prefix/freezeout.dat -output sampler.out/$prefix/ >> hydrologs/$prefix/o.log 2>> hydrologs/$prefix/e.log" >> $job_file
 echo "mv sampler.out/$prefix/particle_lists.oscar sampler.out/$prefix/particle_lists_0" >> $job_file
 echo "time ../smash/build/smash -i smash.in/$prefix.yaml -o smash.out/$prefix/ -f >> hydrologs/$prefix/o.log 2>> hydrologs/$prefix/e.log" >> $job_file
@@ -30,41 +30,45 @@ echo "rm -r hydro.out/$prefix" >> $job_file
 
 # create input file for hydro
 hydro_in=hydro.in/$prefix
-echo "nevents 1" > $hydro_in
-echo "snn   7.7" >> $hydro_in
-echo "b_min  0.0" >> $hydro_in
-echo "b_max  12.0" >> $hydro_in
-echo "projA  197" >> $hydro_in
-echo "targA  197" >> $hydro_in
-echo "projZ  79" >> $hydro_in
-echo "targZ  79" >> $hydro_in
-echo "" >> $hydro_in
+echo "! EoS type: 0 = complex EoS, 1 = simple table (eosFile)" > $hydro_in
 echo "eosType       1" >> $hydro_in
+echo "eosFile         Laine_nf3.dat" >> $hydro_in
 echo "eosTypeHadron 1" >> $hydro_in
+echo "chiBfile        chiB.txt" >> $hydro_in
+echo "chiSfile        chiS.txt" >> $hydro_in
+echo "T_ch          0.149" >> $hydro_in
+echo "mu_b          0.0285" >> $hydro_in
+echo "mu_q         -0.001" >> $hydro_in
+echo "mu_s          0.007" >> $hydro_in
+echo "gammaS        0.935" >> $hydro_in
+echo "gammaFactor   0.75" >> $hydro_in
+echo "exclVolume    0.0" >> $hydro_in
 echo "" >> $hydro_in
-echo "etaS      0.0" >> $hydro_in
-echo "zetaS     0.0" >> $hydro_in
-echo "e_crit    0.5" >> $hydro_in
+echo "etaS      0.15" >> $hydro_in
+echo "zetaS     0.00" >> $hydro_in
+echo "e_crit    0.515" >> $hydro_in
 echo "" >> $hydro_in
-echo "nx        121" >> $hydro_in
-echo "ny        121" >> $hydro_in
-echo "nz        161" >> $hydro_in
-echo "xmin     -18.0" >> $hydro_in
-echo "xmax      18.0" >> $hydro_in
-echo "ymin     -18.0" >> $hydro_in
-echo "ymax      18.0" >> $hydro_in
-echo "etamin     -1.5" >> $hydro_in
-echo "etamax      1.5" >> $hydro_in
+echo "nx        161" >> $hydro_in
+echo "ny        161" >> $hydro_in
+echo "nz        101" >> $hydro_in
+echo "xmin     -20.0" >> $hydro_in
+echo "xmax      20.0" >> $hydro_in
+echo "ymin     -20.0" >> $hydro_in
+echo "ymax      20.0" >> $hydro_in
+echo "etamin     -10.0" >> $hydro_in
+echo "etamax      10.0" >> $hydro_in
 echo "" >> $hydro_in
-echo "Rg      1.0" >> $hydro_in
-echo "tau0       5.0" >> $hydro_in
-echo "tauMax     30.0" >> $hydro_in
+echo "! icModel: 1=Glauber, 2=input from file,  3= urqmd IC (file)" >> $hydro_in
+echo "icModel    5" >> $hydro_in
+echo "glauberVar 1" >> $hydro_in
+echo "s0ScaleFactor  53.55" >> $hydro_in
+echo "epsilon0   30" >> $hydro_in
+echo "impactPar  0.0" >> $hydro_in
+echo "Rg      1" >> $hydro_in
+echo "Rgz     1" >> $hydro_in
+echo "tau0      0.6" >> $hydro_in
+echo "tauMax     25.0" >> $hydro_in
 echo "dtau       0.05" >> $hydro_in
-echo "frictionModel  1" >> $hydro_in
-echo "formationTime  0.0" >> $hydro_in
-echo "xi_fa      0.15" >> $hydro_in
-echo "xi_q       30.0" >> $hydro_in
-echo "xi_h       1.8" >> $hydro_in
 
 # create input file for sampler
 sampler_in=sampler.in/$prefix
