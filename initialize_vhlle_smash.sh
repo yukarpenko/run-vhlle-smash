@@ -24,14 +24,14 @@ mkdir -p hydrologs
 cd ../
 
 # get vHLLE
-git clone git@github.com:yukarpenko/vhlle.git
+git clone https://github.com/yukarpenko/vhlle.git
 cd vhlle/
 git checkout stable_ebe
 make -j2
 cd ../
 
 # download EoS tables
-git clone git@github.com:yukarpenko/vhlle_params.git
+git clone https://github.com/yukarpenko/vhlle_params.git
 #mv vhlle_params/eos hybrid/
 cd hybrid
 ln -s ../vhlle_params/eos eos
@@ -51,7 +51,7 @@ wget https://gitlab.com/libeigen/eigen/-/archive/3.3.9/eigen-3.3.9.tar.gz
 tar -xf eigen-3.3.9.tar.gz && rm eigen-3.3.9.tar.gz
 
 # install SMASH
-git clone git@github.com:smash-transport/smash.git
+git clone https://github.com/smash-transport/smash.git
 cd smash/
 # checkout to version SMASH 2.2 (optional, you may of course use newer version,
 # but sometimes there are some bugs which make it incompatible with hadron sampler)
@@ -63,7 +63,7 @@ make -j4
 cd ../../
 
 # install smash-hadron-sampler
-git clone git@github.com:jakubcimerman/smash-hadron-sampler.git
+git clone https://github.com/jakubcimerman/smash-hadron-sampler.git
 cd smash-hadron-sampler/
 export SMASH_DIR=$BASEDIR/smash
 cp -r $SMASH_DIR/cmake ./
