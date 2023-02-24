@@ -1,6 +1,4 @@
 #!/bin/bash
-set -e
-set -o pipefail
 
 # folder in which the model will be initialized
 cd ..
