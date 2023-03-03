@@ -1,28 +1,33 @@
 ## Running vHLLE-SMASH hybrid using Bash
 
 ## Requirements
-- ROOT >= 5.34
+- 6.22 > ROOT >= 5.34
 - cmake >= 3.9
 - boost filesystem >= 1.49
 - the GNU Scientific Library >= 2.0
 
+!! in the current version, compilation of SMASH and smash-hadron-sampler will fail with ROOT >=6.22, as C++17 needs to be set in such case. The issue will be fixed in the future versions.
+
 ## Install
-To install all necessary parts, simply run
+To install all necessary parts, cd into the repo's subdirectory and run
 ```
 . initialize_vhlle_smash.sh
 ```
-If everything works, you should obtain final message
-```
-Initialization of the hybrid model has been successful
-```
-The installation takes around 1 hour. If there is any issue, you can simply open the script and manually enter commands line by line. One of the most common problems is if you don't have SSH key added to Github (see [this link](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)).
+If no error messages are produced, and a binary for the smash-hadron-sampler is produced at
+
+`../vhlle-smash/smash-hadron-sampler/build/sampler` ,
+
+the installation is successful.
+
+The installation takes around 1 hour. If there is any issue, you can simply open the script and manually enter commands line by line.
 
 ## Run
 To run the code, run
 ```
 . run_vhlle_smash.sh
 ```
-This script generates input files for all three parts of the model as well as script for running the whole model, and then execute that script. In this file, you can set all the parameters for the codes.
+which executes the simulation chain, vHLLE + smash-hadron-sampler + SMASH, for a default scenario of 20-30% central PbPb collisions at sqrt(s)=2.76 TeV, with averaged initial state from longitudinally-extended Monte Carlo Glauber model.
+This script generates input files for all three parts of the model as well as script for execution of the codes the simulation chain, and then executes that script. Inside `run_vhlle_smash.sh`, you can set all the parameters for the codes.
 
 ## Input parameters
 ### Hydro
