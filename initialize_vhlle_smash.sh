@@ -56,7 +56,7 @@ cd smash/
 git checkout b089223
 mkdir build
 cd build/
-cmake .. -DCMAKE_PREFIX_PATH=$BASEDIR/eigen-3.3.9/ -DPythia_CONFIG_EXECUTABLE=$BASEDIR/pythia8307/bin/pythia8-config
+cmake .. -DCMAKE_PREFIX_PATH=$BASEDIR/eigen-3.3.9/ -DPythia_CONFIG_EXECUTABLE=$BASEDIR/pythia8307/bin/pythia8-config -DCMAKE_CXX_STANDARD=17
 make -j4
 cd ../../
 
@@ -67,7 +67,7 @@ export SMASH_DIR=$BASEDIR/smash
 cp -r $SMASH_DIR/cmake ./
 mkdir build
 cd build/
-cmake .. -DCMAKE_PREFIX_PATH=$BASEDIR/eigen-3.3.9/ -DPythia_CONFIG_EXECUTABLE=$BASEDIR/pythia8307/bin/pythia8-config
+cmake .. -DCMAKE_PREFIX_PATH=$BASEDIR/eigen-3.3.9/ -DPythia_CONFIG_EXECUTABLE=$BASEDIR/pythia8307/bin/pythia8-config -DCMAKE_CXX_STANDARD=17
 make
 cd ../../
 
