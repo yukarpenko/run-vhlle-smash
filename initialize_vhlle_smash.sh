@@ -61,7 +61,7 @@ make -j4
 cd ../../
 
 # install smash-hadron-sampler
-git clone git@github.com:smash-transport/smash-hadron-sampler.git
+git clone https://github.com/smash-transport/smash-hadron-sampler.git
 cd smash-hadron-sampler/
 git checkout SMASH-hadron-sampler-3.0
 export SMASH_DIR=$BASEDIR/smash
